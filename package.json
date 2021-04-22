@@ -1,7 +1,7 @@
 {
   "name": "cypress-easy-network-stub",
   "version": "0.0.1",
-  "main": "index.js",
+  "main": "lib/index.js",
   "repository": "https://github.com/LoaderB0T/cypress-easy-network-stub.git",
   "author": "Janik Schumacher",
   "license": "MIT",

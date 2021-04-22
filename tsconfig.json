@@ -1,10 +1,22 @@
 {
   "compilerOptions": {
-    "target": "es2015",
-    "lib": ["es2018", "dom"],
-    "types": ["cypress"],
-    "outDir": "./lib",
-    "skipLibCheck": true
+    "target": "ES2015",
+    "module": "CommonJS",
+    "baseUrl": "./",
+    "lib": ["ES2020"],
+    "declaration": true,
+    "outDir": "lib",
+    "rootDir": "./src",
+    "strict": true,
+    "types": ["node", "cypress"],
+    "sourceMap": true,
+    "esModuleInterop": true,
+    "strictPropertyInitialization": false,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "moduleResolution": "node",
+    "skipLibCheck": true,
+    "newLine": "lf"
   },
-  "include": ["**/*.ts"]
+  "exclude": ["lib"]
 }

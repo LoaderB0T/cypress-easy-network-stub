@@ -35,13 +35,30 @@ export class CypressEasyNetworkStub {
     method: HTTP_METHODS;
   }[] = [];
   private readonly _urlMatch: string | RegExp;
-  private readonly _parameterTypes: { name: string; matcher: string }[] = [];
+  private readonly _parameterTypes: {
+    name: string;
+    matcher: string;
+    parser: (v: string) => any;
+  }[] = [];
 
   constructor(urlMatch: string | RegExp) {
     this._urlMatch = urlMatch;
 
-    this._parameterTypes.push({ name: "number", matcher: "(\\d+)" });
-    this._parameterTypes.push({ name: "boolean", matcher: "(true|false)" });
+    this._parameterTypes.push({
+      name: "string",
+      matcher: "(\\w+)",
+      parser: (a) => a,
+    });
+    this._parameterTypes.push({
+      name: "number",
+      matcher: "(\\d+)",
+      parser: (a) => Number.parseInt(a, 10),
+    });
+    this._parameterTypes.push({
+      name: "boolean",
+      matcher: "(true|false)",
+      parser: (a) => a === "true",
+    });
   }
 
   public init(): any {
@@ -78,20 +95,24 @@ export class CypressEasyNetworkStub {
 
       const res = req.url.match(stub.regx);
 
+      if (!res) {
+        throw new Error(
+          "The provided matcher did not match the current request"
+        );
+      }
+
       const paramMap: IRouteParams = {};
       for (let i = 0; i < stub.params.length; i++) {
         const param = stub.params[i];
         let paramValue: any;
-        switch (param.type) {
-          case "number": {
-            paramValue = Number.parseInt(res[i + 1], 10);
-            break;
-          }
-          case "string":
-          default: {
-            paramValue = res[i + 1];
-            break;
-          }
+
+        const knownParameter = this._parameterTypes.find(
+          (x) => x.name === param.type
+        );
+        if (knownParameter) {
+          paramValue = knownParameter.parser(res[i + 1]);
+        } else {
+          paramValue = res[i + 1];
         }
 
         paramMap[stub.params[i].name] = paramValue;
@@ -148,8 +169,12 @@ export class CypressEasyNetworkStub {
     });
   }
 
-  public addParameterType(name: string, matcher: string) {
-    this._parameterTypes.push({ name, matcher });
+  public addParameterType(
+    name: string,
+    matcher: string,
+    parser: (v: string) => any
+  ) {
+    this._parameterTypes.push({ name, matcher, parser });
   }
 
   public stub(
@@ -171,11 +196,11 @@ export class CypressEasyNetworkStub {
             if (paramMatch[2]) {
               const paramType = paramMatch[2].substring(1) ?? "string";
               params.push({ name: paramName, type: paramType });
-              const knownParameterMatcher = this._parameterTypes.find(
+              const knownParameter = this._parameterTypes.find(
                 (x) => x.name === paramType
               );
-              if (knownParameterMatcher) {
-                return knownParameterMatcher.matcher;
+              if (knownParameter) {
+                return knownParameter.matcher;
               }
             }
             return "(\\w+)";
