@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "target": "es2015",
+    "lib": ["es2018", "dom"],
+    "types": ["cypress"],
+    "outDir": "./lib",
+    "skipLibCheck": true
+  },
+  "include": ["**/*.ts"]
+}
