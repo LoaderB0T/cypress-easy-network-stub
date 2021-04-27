@@ -1,45 +1,15 @@
-const httpMethods = ["GET", "POST", "PUT", "DELETE", "PATCH"];
-
-type HTTP_METHODS = typeof httpMethods[number];
-
-interface IRouteParams {
-  [param: string]: any;
-}
-
-type ResponseIntercepter = (
-  body: any,
-  routeParams: IRouteParams
-) => any | Promise<any>;
-
-type RouteParam = { name: string; type: string };
-
-const headers = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Expose-Headers": "*",
-  "Content-Type": "application/json",
-};
-const preflightHeaders = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Expose-Headers": "*",
-  "access-control-allow-headers": "*",
-  "Access-Control-Request-Headers": "*",
-  "Access-Control-Request-Method": "*",
-  "Access-Control-Allow-Methods": "*",
-};
+import { headers, preflightHeaders } from "./consts/headers";
+import { ExtractRouteParams } from "./models/extract-route-params";
+import { HttpMethod } from "./models/http-method";
+import { ParameterType } from "./models/parameter-type";
+import { RouteParam } from "./models/route-param";
+import { RouteResponseCallback } from "./models/route-response-callback";
+import { Stub } from "./models/stub";
 
 export class CypressEasyNetworkStub {
-  private readonly _stubs: {
-    regx: RegExp;
-    response: ResponseIntercepter;
-    params: RouteParam[];
-    method: HTTP_METHODS;
-  }[] = [];
+  private readonly _stubs: Stub<any>[] = [];
   private readonly _urlMatch: string | RegExp;
-  private readonly _parameterTypes: {
-    name: string;
-    matcher: string;
-    parser: (v: string) => any;
-  }[] = [];
+  private readonly _parameterTypes: ParameterType[] = [];
 
   constructor(urlMatch: string | RegExp) {
     this._urlMatch = urlMatch;
@@ -70,11 +40,6 @@ export class CypressEasyNetworkStub {
         return;
       }
 
-      if (httpMethods.indexOf(req.method) === -1) {
-        req.destroy();
-        return;
-      }
-
       const stub = this._stubs.find(
         (x) => req.url.match(x.regx) && x.method === req.method
       );
@@ -101,7 +66,7 @@ export class CypressEasyNetworkStub {
         );
       }
 
-      const paramMap: IRouteParams = {};
+      const paramMap: ExtractRouteParams<any> = {};
       for (let i = 0; i < stub.params.length; i++) {
         const param = stub.params[i];
         let paramValue: any;
@@ -177,12 +142,12 @@ export class CypressEasyNetworkStub {
     this._parameterTypes.push({ name, matcher, parser });
   }
 
-  public stub(
-    method: HTTP_METHODS,
-    path: string,
-    response: ResponseIntercepter
+  public stub<Route extends string>(
+    method: HttpMethod,
+    route: Route,
+    response: RouteResponseCallback<Route>
   ): void {
-    const segments = path
+    const segments = route
       .toLowerCase()
       .split("/")
       .filter((x) => !!x);
