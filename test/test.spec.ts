@@ -1,4 +1,4 @@
-import { CypressEasyNetworkStub } from "../cypress-easy-network-stub";
+import { CypressEasyNetworkStub } from "../src/cypress-easy-network-stub";
 
 export class Test {
   init() {

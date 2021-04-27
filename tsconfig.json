@@ -18,5 +18,5 @@
     "skipLibCheck": true,
     "newLine": "lf"
   },
-  "exclude": ["lib"]
+  "exclude": ["lib", "test"]
 }
