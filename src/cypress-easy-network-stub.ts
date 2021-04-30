@@ -1,7 +1,7 @@
 import { headers, preflightHeaders } from './consts/headers';
 import { ExtractRouteParams } from './models/extract-route-params';
 import { HttpMethod } from './models/http-method';
-import { ParameterType } from './models/parameter-type';
+import { ParameterType, ParamMatcher } from './models/parameter-type';
 import { RouteParam } from './models/route-param';
 import { RouteResponseCallback } from './models/route-response-callback';
 import { Stub } from './models/stub';
@@ -19,21 +19,9 @@ export class CypressEasyNetworkStub {
   constructor(urlMatch: string | RegExp) {
     this._urlMatch = urlMatch;
 
-    this._parameterTypes.push({
-      name: 'string',
-      matcher: '(\\w+)',
-      parser: a => a
-    });
-    this._parameterTypes.push({
-      name: 'number',
-      matcher: '(\\d+)',
-      parser: a => Number.parseInt(a, 10)
-    });
-    this._parameterTypes.push({
-      name: 'boolean',
-      matcher: '(true|false)',
-      parser: a => a === 'true'
-    });
+    this.addParameterType('string', '(\\w+)');
+    this.addParameterType('number', '(\\d+)', a => Number.parseInt(a, 10));
+    this.addParameterType('boolean', '(true|false)', a => a === 'true');
   }
 
   /**
@@ -140,10 +128,10 @@ export class CypressEasyNetworkStub {
   /**
    * Add a new parameter type that can be used in the stub method route property.
    * @param name The name of the new parameter (To use it as {name} later in the route property)
-   * @param matcher The regex matching group that matches the parameter. Eg: ([a-z]\d+)
+   * @param matcher The regex matching group that matches the parameter. Eg: "([a-z]\d+)"
    * @param parser The optional function that parses the string found by the matcher into any type you want.
    */
-  public addParameterType(name: string, matcher: string, parser: (v: string) => any = s => s) {
+  public addParameterType<A>(name: string, matcher: ParamMatcher, parser: (v: string) => any = s => s) {
     this._parameterTypes.push({ name, matcher, parser });
   }
 
