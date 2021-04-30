@@ -1,10 +1,10 @@
-import { headers, preflightHeaders } from "./consts/headers";
-import { ExtractRouteParams } from "./models/extract-route-params";
-import { HttpMethod } from "./models/http-method";
-import { ParameterType } from "./models/parameter-type";
-import { RouteParam } from "./models/route-param";
-import { RouteResponseCallback } from "./models/route-response-callback";
-import { Stub } from "./models/stub";
+import { headers, preflightHeaders } from './consts/headers';
+import { ExtractRouteParams } from './models/extract-route-params';
+import { HttpMethod } from './models/http-method';
+import { ParameterType } from './models/parameter-type';
+import { RouteParam } from './models/route-param';
+import { RouteResponseCallback } from './models/route-response-callback';
+import { Stub } from './models/stub';
 
 export class CypressEasyNetworkStub {
   private readonly _stubs: Stub<any>[] = [];
@@ -20,19 +20,19 @@ export class CypressEasyNetworkStub {
     this._urlMatch = urlMatch;
 
     this._parameterTypes.push({
-      name: "string",
-      matcher: "(\\w+)",
-      parser: (a) => a,
+      name: 'string',
+      matcher: '(\\w+)',
+      parser: a => a
     });
     this._parameterTypes.push({
-      name: "number",
-      matcher: "(\\d+)",
-      parser: (a) => Number.parseInt(a, 10),
+      name: 'number',
+      matcher: '(\\d+)',
+      parser: a => Number.parseInt(a, 10)
     });
     this._parameterTypes.push({
-      name: "boolean",
-      matcher: "(true|false)",
-      parser: (a) => a === "true",
+      name: 'boolean',
+      matcher: '(true|false)',
+      parser: a => a === 'true'
     });
   }
 
@@ -41,38 +41,34 @@ export class CypressEasyNetworkStub {
    * @returns The cypress chainable to chain to and to have it include itself into an existing chain.
    */
   public init(): Cypress.Chainable<null> {
-    return cy.intercept({ url: this._urlMatch }, async (req) => {
+    return cy.intercept({ url: this._urlMatch }, async req => {
       req.url = req.url.toLowerCase();
 
-      if (req.method.toUpperCase() === "OPTIONS") {
+      if (req.method.toUpperCase() === 'OPTIONS') {
         req.reply(200, undefined, preflightHeaders);
         return;
       }
 
-      const stub = this._stubs.find(
-        (x) => req.url.match(x.regx) && x.method === req.method
-      );
+      const stub = this._stubs.find(x => req.url.match(x.regx) && x.method === req.method);
 
       if (!stub) {
-        console.error("Route not mocked");
-        console.groupCollapsed("Mocking info");
-        console.groupCollapsed("Request");
+        console.error('Route not mocked');
+        console.groupCollapsed('Mocking info');
+        console.groupCollapsed('Request');
         console.log(req);
         console.groupEnd();
-        console.groupCollapsed("Mocks");
+        console.groupCollapsed('Mocks');
         console.log(this._stubs);
         console.groupEnd();
         console.groupEnd();
         req.destroy();
-        assert.fail("Route not mocked: " + req.url);
+        assert.fail('Route not mocked: ' + req.url);
       }
 
       const res = req.url.match(stub.regx);
 
       if (!res) {
-        throw new Error(
-          "The provided matcher did not match the current request"
-        );
+        throw new Error('The provided matcher did not match the current request');
       }
 
       const paramMap: ExtractRouteParams<any> = {};
@@ -80,9 +76,7 @@ export class CypressEasyNetworkStub {
         const param = stub.params[i];
         let paramValue: any;
 
-        const knownParameter = this._parameterTypes.find(
-          (x) => x.name === param.type
-        );
+        const knownParameter = this._parameterTypes.find(x => x.name === param.type);
         if (knownParameter) {
           paramValue = knownParameter.parser(res[i + 1]);
         } else {
@@ -95,9 +89,9 @@ export class CypressEasyNetworkStub {
       try {
         parsedBody = JSON.parse(req.body);
       } catch {
-        if (req.body === "true") {
+        if (req.body === 'true') {
           parsedBody = true;
-        } else if (req.body === "false") {
+        } else if (req.body === 'false') {
           parsedBody = false;
         } else if (/^\d+$/.test(req.body)) {
           parsedBody = Number.parseInt(req.body, 10);
@@ -109,29 +103,29 @@ export class CypressEasyNetworkStub {
       }
 
       let response = await stub.response(parsedBody, paramMap);
-      if (typeof response !== "object") {
+      if (typeof response !== 'object') {
         // Because strings or other primitive types also get parsed with JSON.parse, we need to strigify them here first
         response = JSON.stringify(response);
       }
 
-      console.groupCollapsed("[stub]" + stub.method + " - " + stub.regx.source);
-      console.groupCollapsed("request");
-      console.log("url: " + req.url);
-      console.groupCollapsed("headers");
+      console.groupCollapsed('[stub]' + stub.method + ' - ' + stub.regx.source);
+      console.groupCollapsed('request');
+      console.log('url: ' + req.url);
+      console.groupCollapsed('headers');
       console.log(req.headers);
       console.groupEnd();
-      console.groupCollapsed("body");
+      console.groupCollapsed('body');
       console.log(req.body);
       console.groupEnd();
-      console.groupCollapsed("parsedBody");
+      console.groupCollapsed('parsedBody');
       console.log(parsedBody);
       console.groupEnd();
       console.groupEnd();
-      console.groupCollapsed("response");
-      console.groupCollapsed("body");
+      console.groupCollapsed('response');
+      console.groupCollapsed('body');
       console.log(response);
       console.groupEnd();
-      console.groupCollapsed("headers");
+      console.groupCollapsed('headers');
       console.log(headers);
       console.groupEnd();
       console.groupEnd();
@@ -149,11 +143,7 @@ export class CypressEasyNetworkStub {
    * @param matcher The regex matching group that matches the parameter. Eg: ([a-z]\d+)
    * @param parser The optional function that parses the string found by the matcher into any type you want.
    */
-  public addParameterType(
-    name: string,
-    matcher: string,
-    parser: (v: string) => any = (s) => s
-  ) {
+  public addParameterType(name: string, matcher: string, parser: (v: string) => any = s => s) {
     this._parameterTypes.push({ name, matcher, parser });
   }
 
@@ -163,38 +153,32 @@ export class CypressEasyNetworkStub {
    * @param route The route that should be stubbed. Supports parameters in the form of {name:type}.
    * @param response The callback in which you can process the request and reply with the stub. When a Promise is returned, the stub response will be delayed until it is resolved.
    */
-  public stub<Route extends string>(
-    method: HttpMethod,
-    route: Route,
-    response: RouteResponseCallback<Route>
-  ): void {
+  public stub<Route extends string>(method: HttpMethod, route: Route, response: RouteResponseCallback<Route>): void {
     const segments = route
       .toLowerCase()
-      .split("/")
-      .filter((x) => !!x);
+      .split('/')
+      .filter(x => !!x);
     const params: RouteParam[] = [];
     const rgxString =
       segments
-        .map((segment) => {
+        .map(segment => {
           const paramMatch = segment.match(/{(\w+)(:\w+)?}/);
           if (paramMatch) {
             const paramName = paramMatch[1];
             if (paramMatch[2]) {
-              const paramType = paramMatch[2].substring(1) ?? "string";
+              const paramType = paramMatch[2].substring(1) ?? 'string';
               params.push({ name: paramName, type: paramType });
-              const knownParameter = this._parameterTypes.find(
-                (x) => x.name === paramType
-              );
+              const knownParameter = this._parameterTypes.find(x => x.name === paramType);
               if (knownParameter) {
                 return knownParameter.matcher;
               }
             }
-            return "(\\w+)";
+            return '(\\w+)';
           } else {
             return segment;
           }
         })
-        .join("/") + "/?$";
+        .join('/') + '/?$';
 
     const regx = new RegExp(rgxString);
 
@@ -202,7 +186,7 @@ export class CypressEasyNetworkStub {
       regx,
       response,
       params,
-      method,
+      method
     });
   }
 }
