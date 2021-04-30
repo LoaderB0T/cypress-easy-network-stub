@@ -11,6 +11,11 @@ export class CypressEasyNetworkStub {
   private readonly _urlMatch: string | RegExp;
   private readonly _parameterTypes: ParameterType[] = [];
 
+  /**
+   * A class to intercept and stub all calls to a certain api path.
+   * @param urlMatch The match for all request urls that should be intercepted.
+   * All non-stubbed calls that match this interceptor will throw an error
+   */
   constructor(urlMatch: string | RegExp) {
     this._urlMatch = urlMatch;
 
@@ -31,7 +36,11 @@ export class CypressEasyNetworkStub {
     });
   }
 
-  public init(): any {
+  /**
+   * Call this in your beforeEach hook to start using the stub.
+   * @returns The cypress chainable to chain to and to have it include itself into an existing chain.
+   */
+  public init(): Cypress.Chainable<null> {
     return cy.intercept({ url: this._urlMatch }, async (req) => {
       req.url = req.url.toLowerCase();
 
@@ -134,14 +143,26 @@ export class CypressEasyNetworkStub {
     });
   }
 
+  /**
+   * Add a new parameter type that can be used in the stub method route property.
+   * @param name The name of the new parameter (To use it as {name} later in the route property)
+   * @param matcher The regex matching group that matches the parameter. Eg: ([a-z]\d+)
+   * @param parser The optional function that parses the string found by the matcher into any type you want.
+   */
   public addParameterType(
     name: string,
     matcher: string,
-    parser: (v: string) => any
+    parser: (v: string) => any = (s) => s
   ) {
     this._parameterTypes.push({ name, matcher, parser });
   }
 
+  /**
+   * Add a single api stub to your intercepted routes.
+   * @param method The http method that should be stubbed
+   * @param route The route that should be stubbed. Supports parameters in the form of {name:type}.
+   * @param response The callback in which you can process the request and reply with the stub. When a Promise is returned, the stub response will be delayed until it is resolved.
+   */
   public stub<Route extends string>(
     method: HttpMethod,
     route: Route,
