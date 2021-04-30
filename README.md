@@ -1,3 +1,4 @@
+
 # cypress-easy-network-stub
 An easy class to mock a lot of network requests in cypress
 
@@ -22,3 +23,5 @@ blogStub.stub('POST', 'posts', (body, params) => {
 });
 ```
 
+Strongly typed api parameters:
+![28e1ce4ebde1baee92f4cb40a23452ab](https://user-images.githubusercontent.com/37637338/116729565-9955ab00-a9e7-11eb-828e-f88979f21452.gif)
