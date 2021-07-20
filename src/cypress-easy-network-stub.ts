@@ -2,6 +2,7 @@ import { headers, preflightHeaders } from './consts/headers';
 import { ExtractRouteParams } from './models/extract-route-params';
 import { HttpMethod } from './models/http-method';
 import { ParameterType, ParamMatcher } from './models/parameter-type';
+import { QueryParams } from './models/query-params';
 import { RouteParam } from './models/route-param';
 import { RouteResponseCallback } from './models/route-response-callback';
 import { Stub } from './models/stub';
@@ -60,6 +61,7 @@ export class CypressEasyNetworkStub {
       }
 
       const paramMap: ExtractRouteParams<any> = {};
+      const queryParams: QueryParams = {};
       for (let i = 0; i < stub.params.length; i++) {
         const param = stub.params[i];
         let paramValue: any;
@@ -72,6 +74,20 @@ export class CypressEasyNetworkStub {
         }
 
         paramMap[stub.params[i].name] = paramValue;
+      }
+
+      for (let i = 0; i < stub.queryParams.length; i++) {
+        const param = stub.queryParams[i];
+        const paramStrVal = res[i + 1 + stub.params.length];
+        let paramValue: any;
+        let knownParameter = this._parameterTypes.find(x => x.name === param.type);
+        if (knownParameter) {
+          paramValue = knownParameter.parser(paramStrVal);
+        } else {
+          paramValue = paramStrVal;
+        }
+
+        queryParams[param.name] = paramValue;
       }
       let parsedBody: any;
       try {
@@ -90,7 +106,7 @@ export class CypressEasyNetworkStub {
         }
       }
 
-      let response = await stub.response(parsedBody, paramMap);
+      let response = await stub.response(parsedBody, paramMap, queryParams);
       if (typeof response !== 'object') {
         // Because strings or other primitive types also get parsed with JSON.parse, we need to strigify them here first
         response = JSON.stringify(response);
@@ -144,13 +160,15 @@ export class CypressEasyNetworkStub {
   public stub<Route extends string>(method: HttpMethod, route: Route, response: RouteResponseCallback<Route>): void {
     const segments = route
       .toLowerCase()
-      .split('/')
+      .split(/[/?&]/g)
       .filter(x => !!x);
     const params: RouteParam[] = [];
+    const queryParams: RouteParam[] = [];
     const rgxString =
       segments
         .map(segment => {
           const paramMatch = segment.match(/{(\w+)(:\w+)?}/);
+          const queryParamMatch = segment.match(/^(\w+)=(\w+)$/);
           if (paramMatch) {
             const paramName = paramMatch[1];
             if (paramMatch[2]) {
@@ -162,6 +180,11 @@ export class CypressEasyNetworkStub {
               }
             }
             return '(\\w+)';
+          } else if (queryParamMatch) {
+            const queryParamName = queryParamMatch[1];
+            const queryParamType = queryParamMatch[2] ?? 'string';
+            queryParams.push({ name: queryParamName, type: queryParamType });
+            return '\\w+=(\\w+)';
           } else {
             return segment;
           }
@@ -174,6 +197,7 @@ export class CypressEasyNetworkStub {
       regx,
       response,
       params,
+      queryParams,
       method
     });
   }

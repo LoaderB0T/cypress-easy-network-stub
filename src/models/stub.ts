@@ -6,5 +6,6 @@ export type Stub<T extends string> = {
   regx: RegExp;
   response: RouteResponseCallback<T>;
   params: RouteParam[];
+  queryParams: RouteParam[];
   method: HttpMethod;
 };
