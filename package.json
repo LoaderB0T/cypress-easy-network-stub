@@ -8,7 +8,7 @@
   "prettier": "@awdware/prettier-config",
   "devDependencies": {
     "@awdware/prettier-config": "^0.0.2",
-    "cypress": "^7.1.0",
+    "cypress": "^8.0.0",
     "typescript": "^4.2.4"
   },
   "peerDependencies": {
