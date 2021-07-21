@@ -20,12 +20,16 @@ export class Test {
       posts.push({ postId: body.postId, text: body.text });
     });
 
-    blogStub.stub('DELETE', 'posts/{id:number}', (body, params) => {
+    blogStub.stub('DELETE', 'posts/{id:number}/{id2}/{id3:number}', (body, params) => {
+      const idx = posts.findIndex(x => x.postId === params.id);
+      posts.splice(idx, 1);
+    });
+    blogStub.stub('DELETE', 'posts/{id:number}?{id2}&{id3:number}', (body, params) => {
       const idx = posts.findIndex(x => x.postId === params.id);
       posts.splice(idx, 1);
     });
 
-    blogStub.stub('GET', 'test/{id:number}/{test:string}/doSomething/{yes:number}', (body, params) => {
+    blogStub.stub('GET', 'test/{id:number}/{test}?{bla:number}', (body, params) => {
       console.log(params);
     });
   }
