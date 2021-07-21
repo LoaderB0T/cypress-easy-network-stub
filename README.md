@@ -1,10 +1,11 @@
-
 # cypress-easy-network-stub
+
 An easy class to mock a lot of network requests in cypress
 
 [![npm version](https://badge.fury.io/js/cypress-easy-network-stub.svg)](https://badge.fury.io/js/cypress-easy-network-stub)
 
 Example:
+
 ```typescript
 const posts = [0, 1, 2, 3, 4, 5].map(x => ({ postId: x, text: `test${x}` }));
 
@@ -22,6 +23,12 @@ blogStub.stub('GET', 'posts/{id:number}', (body, params) => {
 
 blogStub.stub('POST', 'posts', (body, params) => {
   posts.push({ postId: body.postId, text: body.text });
+});
+
+blogStub.stub('POST', 'test/{something:boolean}?{query:string}&{secondQuery:number}', (body, params) => {
+  console.log(params.something);
+  console.log(params.query);
+  console.log(params.secondQuery);
 });
 ```
 
