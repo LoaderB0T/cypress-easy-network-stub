@@ -147,7 +147,7 @@ export class CypressEasyNetworkStub {
    * @param response The callback in which you can process the request and reply with the stub. When a Promise is returned, the stub response will be delayed until it is resolved.
    */
   public stub<Route extends string>(method: HttpMethod, route: Route, response: RouteResponseCallback<Route>): void {
-    const segments = route.toLowerCase().split(/(?=[\/?&])/);
+    const segments = route.split(/(?=[\/?&])/);
     const params: RouteParam[] = [];
     const rgxString =
       segments
@@ -180,7 +180,7 @@ export class CypressEasyNetworkStub {
         })
         .join('') + '/?$';
 
-    const regx = new RegExp(rgxString);
+    const regx = new RegExp(rgxString, 'i');
 
     this._stubs.push({
       regx,
