@@ -170,7 +170,7 @@ export class CypressEasyNetworkStub {
               params.push({ name: paramName, type: paramValueType });
               const knownParameter = this._parameterTypes.find(x => x.name === paramValueType && x.type === paramType);
               if (knownParameter) {
-                return prefix + (paramType === 'route' ? knownParameter.matcher : `${paramName}(?:=(?:${knownParameter.matcher}))`);
+                return prefix + (paramType === 'route' ? knownParameter.matcher : `${paramName}(?:=(?:${knownParameter.matcher})?)?`);
               }
             }
             return prefix + (paramType === 'route' ? '(\\w+)' : '\\w+=(\\w+)');
