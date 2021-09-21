@@ -136,7 +136,7 @@ export class CypressEasyNetworkStub {
    * @param matcher The regex matching group that matches the parameter. Eg: "([a-z]\d+)"
    * @param parser The optional function that parses the string found by the matcher into any type you want.
    */
-  public addParameterType<A>(name: string, matcher: ParamMatcher, type: ParamType, parser: (v: string) => any = s => s) {
+  public addParameterType(name: string, matcher: ParamMatcher, type: ParamType, parser: (v: string) => any = s => s) {
     this._parameterTypes.push({ name, matcher, parser, type });
   }
 
@@ -170,7 +170,7 @@ export class CypressEasyNetworkStub {
               params.push({ name: paramName, type: paramValueType });
               const knownParameter = this._parameterTypes.find(x => x.name === paramValueType && x.type === paramType);
               if (knownParameter) {
-                return prefix + (paramType === 'route' ? knownParameter.matcher : `\\w+=${knownParameter.matcher}`);
+                return prefix + (paramType === 'route' ? knownParameter.matcher : `${paramName}(?:=(?:${knownParameter.matcher}))`);
               }
             }
             return prefix + (paramType === 'route' ? '(\\w+)' : '\\w+=(\\w+)');
