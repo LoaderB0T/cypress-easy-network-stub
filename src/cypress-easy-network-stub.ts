@@ -23,7 +23,7 @@ export class CypressEasyNetworkStub {
     this.addParameterType('number', '(\\d+)', 'route', a => Number.parseInt(a, 10));
     this.addParameterType('boolean', '(true|false)', 'route', a => a === 'true');
 
-    this.addParameterType('string', '(\\w+)', 'query');
+    this.addParameterType('string', '([\\w%]+)', 'query');
     this.addParameterType('number', '(\\d+)', 'query', a => Number.parseInt(a, 10));
     this.addParameterType('boolean', '(true|false)', 'query', a => a === 'true');
   }
