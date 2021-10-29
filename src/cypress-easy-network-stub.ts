@@ -1,4 +1,5 @@
 import { headers, preflightHeaders } from './consts/headers';
+import { ErrorResponse } from './models/error-response';
 import { HttpMethod } from './models/http-method';
 import { ParameterType, ParamMatcher, ParamType } from './models/parameter-type';
 import { RouteParam } from './models/route-param';
@@ -94,8 +95,19 @@ export class CypressEasyNetworkStub {
           parsedBody = req.body;
         }
       }
+      let response: any;
+      try {
+        response = await stub.response(parsedBody, paramMap);
+      } catch (e: any) {
+        const error = e as ErrorResponse;
+        if (error.statusCode) {
+          req.reply({ statusCode: error.statusCode, body: JSON.stringify(error.message) });
+        } else {
+          req.reply(500, JSON.stringify(error.message ?? 'unknown error in mocked response'));
+        }
+        return;
+      }
 
-      let response = await stub.response(parsedBody, paramMap);
       if (typeof response !== 'object') {
         // Because strings or other primitive types also get parsed with JSON.parse, we need to strigify them here first
         response = JSON.stringify(response);
@@ -170,7 +182,9 @@ export class CypressEasyNetworkStub {
               params.push({ name: paramName, type: paramValueType });
               const knownParameter = this._parameterTypes.find(x => x.name === paramValueType && x.type === paramType);
               if (knownParameter) {
-                return prefix + (paramType === 'route' ? knownParameter.matcher : `${paramName}(?:=(?:${knownParameter.matcher})?)?`);
+                return (
+                  prefix + (paramType === 'route' ? knownParameter.matcher : `${paramName}(?:=(?:${knownParameter.matcher})?)?`)
+                );
               }
             }
             return prefix + (paramType === 'route' ? '(\\w+)' : '\\w+=(\\w+)');
