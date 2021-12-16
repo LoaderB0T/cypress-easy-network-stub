@@ -1,4 +1,5 @@
-export interface ErrorResponse {
+export interface ErrorResponse<T> {
   statusCode: number;
-  message: string;
+  content: T;
+  headers?: { [key: string]: string };
 }

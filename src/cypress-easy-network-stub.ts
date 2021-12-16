@@ -99,11 +99,16 @@ export class CypressEasyNetworkStub {
       try {
         response = await stub.response(parsedBody, paramMap);
       } catch (e: any) {
-        const error = e as ErrorResponse;
+        const error = e as ErrorResponse<any>;
+        const errorContent = typeof error.content !== 'object' ? JSON.stringify(error) : error.content;
+        let errorHeaders = { ...headers };
+        if (error.headers) {
+          errorHeaders = { ...errorHeaders, ...error.headers };
+        }
         if (error.statusCode) {
-          req.reply({ statusCode: error.statusCode, body: JSON.stringify(error.message) });
+          req.reply({ statusCode: error.statusCode, body: errorContent, headers: errorHeaders });
         } else {
-          req.reply(500, JSON.stringify(error.message ?? 'unknown error in mocked response'));
+          req.reply(500, JSON.stringify(errorContent ?? 'unknown error in mocked response'));
         }
         return;
       }
