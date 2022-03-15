@@ -1,6 +1,6 @@
 {
   "name": "cypress-easy-network-stub",
-  "version": "1.3.1",
+  "version": "1.4.0",
   "main": "lib/index.js",
   "repository": "https://github.com/LoaderB0T/cypress-easy-network-stub.git",
   "author": "Janik Schumacher",
@@ -8,7 +8,9 @@
   "prettier": "@awdware/prettier-config",
   "devDependencies": {
     "@awdware/prettier-config": "^0.0.2",
-    "cypress": "^8.0.0",
+    "@types/node": "^16.0.0",
+    "cypress": "^9.0.0",
+    "prettier": "^2.5.1",
     "ts-node": "^10.1.0",
     "typescript": "^4.2.4"
   },
