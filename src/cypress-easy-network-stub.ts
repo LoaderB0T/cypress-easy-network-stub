@@ -171,7 +171,7 @@ export class CypressEasyNetworkStub {
         .map(segment => {
           let prefix = segment.charAt(0);
           if (prefix === '/' || prefix === '&' || prefix === '?') {
-            segment = segment.substr(1);
+            segment = segment.substring(1);
           } else {
             prefix = '';
           }
