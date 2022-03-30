@@ -451,7 +451,7 @@ diff@^4.0.1:
 
 easy-network-stub@^0.0.4:
   version "0.0.4"
-  resolved "https://registry.yarnpkg.com/easy-network-stub/-/easy-network-stub-0.0.4.tgz#15dd1ed4bea13592131970f51ef641b8113bb759"
+  resolved "https://registry.npmjs.org/easy-network-stub/-/easy-network-stub-0.0.4.tgz#15dd1ed4bea13592131970f51ef641b8113bb759"
   integrity sha512-iGzXIAm7lrsDcLm977nhGo5N5JHs0UufLr91uYolvLku7SmB4rNWefgPH+xPzUQGNA17K13a0tTpPbhmSaxrAg==
 
 ecc-jsbn@~0.1.1:
