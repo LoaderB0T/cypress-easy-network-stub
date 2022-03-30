@@ -6,6 +6,9 @@
   "author": "Janik Schumacher",
   "license": "MIT",
   "prettier": "@awdware/prettier-config",
+  "dependencies": {
+    "easy-network-stub": "^0.0.1"
+  },
   "devDependencies": {
     "@awdware/prettier-config": "^0.0.2",
     "@types/node": "^16.0.0",
