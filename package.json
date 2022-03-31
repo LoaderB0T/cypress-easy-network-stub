@@ -1,13 +1,13 @@
 {
   "name": "cypress-easy-network-stub",
-  "version": "1.5.2",
+  "version": "1.6.0",
   "main": "lib/index.js",
   "repository": "https://github.com/LoaderB0T/cypress-easy-network-stub.git",
   "author": "Janik Schumacher",
   "license": "MIT",
   "prettier": "@awdware/prettier-config",
   "dependencies": {
-    "easy-network-stub": "^0.0.4"
+    "easy-network-stub": "^1.0.1"
   },
   "devDependencies": {
     "@awdware/prettier-config": "^0.0.2",
