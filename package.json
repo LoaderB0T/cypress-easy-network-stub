@@ -1,6 +1,6 @@
 {
   "name": "cypress-easy-network-stub",
-  "version": "1.6.1-pre1",
+  "version": "1.6.1-pre2",
   "main": "lib/index.js",
   "repository": "https://github.com/LoaderB0T/cypress-easy-network-stub.git",
   "author": "Janik Schumacher",
