@@ -7,7 +7,7 @@
   "license": "MIT",
   "prettier": "@awdware/prettier-config",
   "dependencies": {
-    "easy-network-stub": "1.0.4-pre1"
+    "easy-network-stub": "1.1.0"
   },
   "devDependencies": {
     "@awdware/prettier-config": "^0.0.2",

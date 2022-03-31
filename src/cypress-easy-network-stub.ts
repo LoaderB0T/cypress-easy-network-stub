@@ -14,23 +14,21 @@ export class CypressEasyNetworkStub extends EasyNetworkStub {
    * Call this in your beforeEach hook to start using the stub.
    * @returns The cypress chainable to chain to and to have it include itself into an existing chain.
    */
-  public init(): Cypress.Chainable<JQuery<void>> {
-    return cy.then<void>(() => {
-      this.initInternal({
-        failer: error => assert.fail(error instanceof Error ? error.message : error),
-        interceptor: (baseUrl, handler) => {
-          cy.intercept({ url: baseUrl }, req => {
-            handler({
-              url: req.url,
-              method: req.method as HttpMethod,
-              headers: req.headers,
-              destroy: () => req.destroy(),
-              reply: reply => req.reply(reply),
-              body: req.body
-            });
+  public init(): Cypress.Chainable<null> {
+    return this.initInternal({
+      failer: error => assert.fail(error instanceof Error ? error.message : error),
+      interceptor: (baseUrl, handler) => {
+        return cy.intercept({ url: baseUrl }, async req => {
+          await handler({
+            url: req.url,
+            method: req.method as HttpMethod,
+            headers: req.headers,
+            destroy: () => req.destroy(),
+            reply: reply => req.reply(reply),
+            body: req.body
           });
-        }
-      });
+        });
+      }
     });
   }
 }
