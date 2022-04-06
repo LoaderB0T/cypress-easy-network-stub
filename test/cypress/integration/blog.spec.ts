@@ -12,7 +12,7 @@ describe('CypressEasyNetworkStub', () => {
     blogStub['config'].failer = (error: string) => {
       lastError = error;
     };
-    blogStub['config'].errorLogger = (error: string) => {
+    blogStub['config'].errorLogger = () => {
       // Do nothing
     };
     cy.visit(baseUrl);
