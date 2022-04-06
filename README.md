@@ -23,9 +23,7 @@ When running tests in cypress, sometimes you want to mock all network requests. 
 
 ✅ Add your own parameter matchers
 
-✅ Detailed logging of all stubbed requests
-
-✅ Works synchronously and asynchronously
+✅ Works asynchronously (Promise based)
 
 ✅ Supports failing of stubbed requests
 
