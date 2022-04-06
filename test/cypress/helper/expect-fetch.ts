@@ -15,7 +15,7 @@ export const expectFetch = (cfg: FetchType, expectedData: any) => {
   });
 };
 
-export const doFetch = async (cfg: FetchType) => {
+export const doFetch = async (cfg: FetchType): Promise<unknown> => {
   return new Promise((resolve, reject) => {
     window
       .fetch(cfg.url, { method: cfg.method ?? 'GET', body: cfg.body })
