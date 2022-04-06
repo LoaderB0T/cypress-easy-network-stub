@@ -474,10 +474,10 @@ diff@^4.0.1:
   resolved "https://registry.yarnpkg.com/diff/-/diff-4.0.2.tgz#60f3aecb89d5fae520c11aa19efc2bb982aade7d"
   integrity sha512-58lmxKSA4BNyLz+HHMUzlOEpg09FV+ev6ZMe3vJihgdxzgcwZ8VoEEPmALCZG9LmqfVoNMMKpttIYTVG6uDY7A==
 
-easy-network-stub@^4.0.0:
-  version "4.2.3"
-  resolved "https://registry.yarnpkg.com/easy-network-stub/-/easy-network-stub-4.2.3.tgz#c8236d8df4af213bf0ab89a579c06c0463e88df8"
-  integrity sha512-THZHAZdgH23pu1POymbLL7FrjyoQJB06McqPpvhyP+2BFCpqWn+7fH2pX+6w1BB3zslFl04tcXVJAjF8YDwZNw==
+easy-network-stub@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/easy-network-stub/-/easy-network-stub-5.0.0.tgz#3ea0648e7f20e3a866a0b5f187da8704c7388765"
+  integrity sha512-PClOiPE3mZHIZapzzN9jWZTbVuweM9BmcfIjw0z1uZmjMY95yeAApqDM3iSFZMCGMAbQYjP/33RDKDlw+jmjqw==
 
 ecc-jsbn@~0.1.1:
   version "0.1.2"

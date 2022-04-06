@@ -20,9 +20,14 @@ export const doFetch = async (cfg: FetchType) => {
     window
       .fetch(cfg.url, { method: cfg.method ?? 'GET', body: cfg.body })
       .then(res => {
-        res.json().then(data => {
-          resolve(data);
-        });
+        res
+          .json()
+          .then(data => {
+            resolve(data);
+          })
+          .catch(err => {
+            reject(err);
+          });
       })
       .catch(err => {
         reject(err);

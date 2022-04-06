@@ -17,6 +17,7 @@ export class CypressEasyNetworkStub extends EasyNetworkStub {
   public init(): Cypress.Chainable<null> {
     return this.initInternal({
       failer: error => assert.fail(error instanceof Error ? error.message : error),
+      responseProcessor: response => (response && typeof response !== 'object' ? JSON.stringify(response) : response),
       interceptor: (baseUrl, handler) => {
         return cy.intercept({ url: baseUrl }, async req => {
           await handler({

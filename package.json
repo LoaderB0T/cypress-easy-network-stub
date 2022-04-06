@@ -13,7 +13,7 @@
     "test-open": "yarn cypress open --project test"
   },
   "dependencies": {
-    "easy-network-stub": "^4.0.0"
+    "easy-network-stub": "^5.0.0"
   },
   "devDependencies": {
     "@awdware/prettier-config": "^0.0.2",
