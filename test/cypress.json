@@ -3,5 +3,9 @@
   "integrationFolder": "cypress/integration",
   "video": false,
   "defaultCommandTimeout": 4000,
-  "screenshotOnRunFailure": false
+  "screenshotOnRunFailure": false,
+  "reporter": "../node_modules/cypress-multi-reporters",
+  "reporterOptions": {
+    "configFile": "reporter-config.json"
+  }
 }
