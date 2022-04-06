@@ -8,7 +8,9 @@
   "prettier": "@awdware/prettier-config",
   "scripts": {
     "clean": "yarn rimraf lib",
-    "build": "yarn run clean && yarn tsc"
+    "build": "yarn run clean && yarn tsc",
+    "test": "yarn cypress run --project test",
+    "test-open": "yarn cypress open --project test"
   },
   "dependencies": {
     "easy-network-stub": "^4.0.0"
