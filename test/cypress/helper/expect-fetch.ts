@@ -38,7 +38,9 @@ export const doFetch = async (cfg: FetchType) => {
 export const expectFailFetch = (baseUrl: string, url: string, method: HttpMethod, getLastError: () => string) => {
   return cy.wrap(null).then(() => {
     return doFetch({ url, method })
-      .catch(() => {})
+      .catch(() => {
+        // expected, but ignored, because we want to assert the error
+      })
       .then(() => {
         cy.wrap(getLastError()).should('equal', getError(baseUrl + url, method));
       });
