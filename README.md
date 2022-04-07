@@ -85,7 +85,7 @@ blogStub.stub('GET', 'test?{refresh?:boolean}', ({ body, params }) => {
 // You can mark query params as arrays with a '[]'
 // Match Example: GET: /MyServer/api/Blog/test?props=1
 // Match Example: GET: /MyServer/api/Blog/test?props=1&props=2
-blogStub.stub('GET', 'test?{props:number[]}}', ({ params }) => {
+blogStub.stub('GET', 'test?{props:number[]}', ({ params }) => {
   params.props.forEach(x => console.log(x));
 });
 ```
