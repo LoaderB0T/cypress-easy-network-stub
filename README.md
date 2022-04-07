@@ -40,30 +40,53 @@ The primary use case for this package is to create a mock server for your tests 
 ```typescript
 const posts = [0, 1, 2, 3, 4, 5].map(x => ({ postId: x, text: `test${x}` }));
 
-const blogStub = new CypressEasyNetworkStub('/MyServer/api/Blog');
+const blogStub = new CypressEasyNetworkStub(/MyServer\/api\/Blog/);
 
 blogStub.init();
 
-blogStub.stub('GET', 'posts', (body, params) => {
+blogStub.stub('GET', 'posts', () => {
   return posts;
 });
 
 // Match Example: GET: /MyServer/api/Blog/posts/123
-blogStub.stub('GET', 'posts/{id:number}', (body, params) => {
+blogStub.stub('GET', 'posts/{id:number}', ({ params }) => {
   return posts.find(x => x.postId === params.id);
 });
 
 // Match Example: POST: /MyServer/api/post
-blogStub.stub('POST', 'posts', (body, params) => {
+blogStub.stub('POST', 'posts', ({ body, params }) => {
   posts.push({ postId: body.postId, text: body.text });
 });
 
 // Match Example: POST: /MyServer/api/Blog/test/true?query=myValue&secondQuery=myOtherValue
 // Note: The order of the query parameters is not important
-blogStub.stub('POST', 'test/{something:boolean}?{query:string}&{secondQuery:number}', (body, params) => {
+blogStub.stub('POST', 'test/{something:boolean}?{query:string}&{secondQuery:number}', ({ body, params }) => {
   console.log(params.something);
   console.log(params.query);
   console.log(params.secondQuery);
+  console.log(body);
+});
+
+// Here we use the stub2<>() method to create a stub with a typed body
+blogStub.stub2<MyRequest>()('POST', 'test', ({ body }) => {
+  console.log(body.myValue);
+});
+
+// You can mark query params as optional with a '?'
+// Match Example: GET: /MyServer/api/Blog/test
+// Match Example: GET: /MyServer/api/Blog/test?refresh=true
+blogStub.stub('GET', 'test?{refresh?:boolean}', ({ body, params }) => {
+  if (params.refresh) {
+    console.log('Refreshing');
+  }
+  console.log(body.myValue);
+});
+
+// You can mark query params as arrays with a '[]'
+// Match Example: GET: /MyServer/api/Blog/test?props=1
+// Match Example: GET: /MyServer/api/Blog/test?props=1&props=2
+blogStub.stub('GET', 'test?{props:number[]}}', ({ params }) => {
+  params.props.forEach(x => console.log(x));
 });
 ```
 
