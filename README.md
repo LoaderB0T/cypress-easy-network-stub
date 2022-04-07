@@ -67,9 +67,12 @@ blogStub.stub('POST', 'test/{something:boolean}?{query:string}&{secondQuery:numb
 });
 ```
 
-Strongly typed api parameters:
-
-![28e1ce4ebde1baee92f4cb40a23452ab](https://user-images.githubusercontent.com/37637338/116729565-9955ab00-a9e7-11eb-828e-f88979f21452.gif)
+## Strongly typed api parameters:
+You can add types to parameters and they will be parsed. Out of box 'string', 'number' and 'boolean' are supported. You can add your own types and parsers though.
+<p align="center">
+<img src="https://user-images.githubusercontent.com/37637338/162327029-994ce009-d1ab-45cc-ab86-d1e21a0d1a6e.png">
+<img src="https://user-images.githubusercontent.com/37637338/162327040-a45381a1-652d-4838-91ae-7dc405bd9ff4.png">
+</p>
 
 ## Contributing 🧑🏻‍💻
 
