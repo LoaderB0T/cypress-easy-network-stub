@@ -1,7 +1,7 @@
 {
   "name": "cypress-easy-network-stub",
   "version": "3.1.1",
-  "main": "lib/src/index.js",
+  "main": "lib/index.js",
   "repository": "https://github.com/LoaderB0T/cypress-easy-network-stub.git",
   "author": "Janik Schumacher",
   "license": "MIT",
@@ -13,7 +13,7 @@
     "test-open": "yarn cypress open --project test"
   },
   "dependencies": {
-    "easy-network-stub": "^5.0.0"
+    "easy-network-stub": "^5.1.0"
   },
   "devDependencies": {
     "@awdware/prettier-config": "^0.0.2",

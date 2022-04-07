@@ -1,22 +1,7 @@
 {
+  "extends": "./tsconfig.base.json",
+  "exclude": ["lib", "test"],
   "compilerOptions": {
-    "target": "ES2015",
-    "module": "CommonJS",
-    "baseUrl": "./",
-    "lib": ["ES2020"],
-    "declaration": true,
-    "outDir": "lib",
-    "rootDir": ".",
-    "strict": true,
-    "types": ["node", "cypress"],
-    "sourceMap": true,
-    "esModuleInterop": true,
-    "strictPropertyInitialization": false,
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "moduleResolution": "node",
-    "skipLibCheck": true,
-    "newLine": "lf"
-  },
-  "exclude": ["lib", "test"]
+    "rootDir": "./src"
+  }
 }
