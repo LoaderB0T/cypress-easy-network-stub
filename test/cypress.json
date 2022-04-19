@@ -7,5 +7,7 @@
   "reporter": "../node_modules/cypress-multi-reporters",
   "reporterOptions": {
     "configFile": "reporter-config.json"
-  }
+  },
+  "fixturesFolder": false,
+  "supportFile": false
 }
