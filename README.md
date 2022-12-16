@@ -1,5 +1,5 @@
 [![npm](https://img.shields.io/npm/v/cypress-easy-network-stub?color=%2300d26a&style=for-the-badge)](https://www.npmjs.com/package/cypress-easy-network-stub)
-[![CI](https://img.shields.io/github/workflow/status/LoaderB0T/cypress-easy-network-stub/CI/main?style=for-the-badge)](https://github.com/LoaderB0T/cypress-easy-network-stub/actions/workflows/build.yml)
+[![CI](https://img.shields.io/github/actions/workflow/status/LoaderB0T/cypress-easy-network-stub/build.yml?branch=main&style=for-the-badge)](https://github.com/LoaderB0T/cypress-easy-network-stub/actions/workflows/build.yml)
 [![Sonar Quality Gate](https://img.shields.io/sonar/quality_gate/LoaderB0T_cypress-easy-network-stub?server=https%3A%2F%2Fsonarcloud.io&style=for-the-badge)](https://sonarcloud.io/summary/new_code?id=LoaderB0T_cypress-easy-network-stub)
 [![bundle size](https://img.shields.io/bundlephobia/minzip/cypress-easy-network-stub?color=%23FF006F&label=Bundle%20Size&style=for-the-badge)](https://bundlephobia.com/package/cypress-easy-network-stub)
 
