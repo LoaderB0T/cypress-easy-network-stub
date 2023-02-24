@@ -17,14 +17,16 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: 16.x
+      - name: Install pnpm
+        run: npm i -g pnpm
       - name: Install
-        run: yarn
+        run: pnpm i
       - name: Build
-        run: yarn run build
+        run: pnpm run build
       - name: Lint
-        run: yarn run lint
+        run: pnpm run lint
       - name: Test
-        run: yarn run test
+        run: pnpm run test
         env:
           FORCE_COLOR: 1
       - name: Publish Unit Test Results
