@@ -9,10 +9,10 @@ describe('CypressEasyNetworkStub', () => {
   beforeEach(() => {
     blogStub = new CypressEasyNetworkStub('**/MyServer/api/Blog/**');
     blogStub.init();
-    blogStub['config'].failer = (error: string) => {
+    blogStub['_config'].failer = (error: string) => {
       lastError = error;
     };
-    blogStub['config'].errorLogger = () => {
+    blogStub['_config'].errorLogger = () => {
       // Do nothing
     };
     cy.visit(baseUrl);
@@ -22,18 +22,18 @@ describe('CypressEasyNetworkStub', () => {
     blogStub.stub('GET', 'posts', () => {
       return [
         { id: 1, title: 'Hello' },
-        { id: 2, title: 'World' }
+        { id: 2, title: 'World' },
       ];
     });
 
     expectFetch({ url: '/MyServer/api/Blog/posts' }, [
       { id: 1, title: 'Hello' },
-      { id: 2, title: 'World' }
+      { id: 2, title: 'World' },
     ]);
     // Trailing slash is matched as well
     expectFetch({ url: '/MyServer/api/Blog/posts/' }, [
       { id: 1, title: 'Hello' },
-      { id: 2, title: 'World' }
+      { id: 2, title: 'World' },
     ]);
   });
 
@@ -41,7 +41,7 @@ describe('CypressEasyNetworkStub', () => {
     blogStub.stub('GET', 'posts', () => {
       return [
         { id: 1, title: 'Hello' },
-        { id: 2, title: 'World' }
+        { id: 2, title: 'World' },
       ];
     });
     expectFailFetch(baseUrl, '/MyServer/api/Blog/posts2', 'GET', () => lastError);
@@ -54,7 +54,7 @@ describe('CypressEasyNetworkStub', () => {
     blogStub.stub('GET', 'posts', () => {
       return [
         { id: 1, title: 'Hello' },
-        { id: 2, title: 'World' }
+        { id: 2, title: 'World' },
       ];
     });
     expectFailFetch(baseUrl, '/MyServer/api/Blog/posts', 'POST', () => lastError);
@@ -81,16 +81,16 @@ describe('CypressEasyNetworkStub', () => {
         { id: 1, title: 'Hello', read: true },
         { id: 2, title: 'World', read: false },
         { id: 3, title: 'Hello2', read: true },
-        { id: 4, title: 'World2', read: false }
+        { id: 4, title: 'World2', read: false },
       ].filter(x => x.read === params.read);
     });
     expectFetch({ url: '/MyServer/api/Blog/posts3/true' }, [
       { id: 1, title: 'Hello', read: true },
-      { id: 3, title: 'Hello2', read: true }
+      { id: 3, title: 'Hello2', read: true },
     ]);
     expectFetch({ url: '/MyServer/api/Blog/posts3/false' }, [
       { id: 2, title: 'World', read: false },
-      { id: 4, title: 'World2', read: false }
+      { id: 4, title: 'World2', read: false },
     ]);
   });
 
