@@ -9,28 +9,5 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v2
-      - name: Use Node.js 20.x
-        uses: actions/setup-node@v2
-        with:
-          node-version: 20.x
-      - name: Install pnpm
-        run: npm i -g pnpm
-      - name: Install
-        run: pnpm i
-      - name: Build
-        run: pnpm run build
-      - name: Lint
-        run: pnpm run lint
-      - name: Test
-        run: pnpm run test
-        env:
-          FORCE_COLOR: 1
-      - name: Publish Unit Test Results
-        uses: EnricoMi/publish-unit-test-result-action@v1
-        if: always()
-        with:
-          files: test/cypress/results/results.xml
+    uses: awdware/dev/.github/workflows/nodejs.yml@main
+    secrets: inherit
