@@ -21,20 +21,21 @@
     "easy-network-stub": "^7.1.0"
   },
   "devDependencies": {
-    "@awdware/eslint-config-base": "^1.2.0",
-    "@awdware/eslint-config-nodejs": "^1.0.0",
+    "@awdware/eslint-config-base": "^2.1.0",
+    "@awdware/eslint-config-nodejs": "^2.0.0",
     "@awdware/prettier-config": "^1.0.0",
     "@types/node": "^22.0.2",
-    "@typescript-eslint/eslint-plugin": "^8.0.0",
-    "@typescript-eslint/parser": "^8.0.0",
     "cypress": "^13.13.2",
     "cypress-multi-reporters": "^1.6.4",
-    "eslint": "^8.57.0",
+    "eslint": "^9.11.1",
+    "eslint-plugin-import": "2.31.0",
+    "eslint-plugin-unused-imports": "4.1.4",
     "mocha-junit-reporter": "^2.2.1",
     "prettier": "^3.3.3",
     "rimraf": "^6.0.1",
     "ts-node": "^10.9.2",
-    "typescript": "^5.5.4"
+    "typescript": "^5.5.4",
+    "typescript-eslint": "8.8.0"
   },
   "peerDependencies": {
     "cypress": ">= 6.0"
