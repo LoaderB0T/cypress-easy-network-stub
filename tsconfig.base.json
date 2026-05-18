@@ -1,22 +1,27 @@
 {
   "compilerOptions": {
-    "target": "ES2015",
-    "module": "CommonJS",
-    "baseUrl": "./",
-    "lib": ["ES2020"],
+    "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "lib": [
+      "ES2025"
+    ],
     "declaration": true,
     "outDir": "lib",
     "rootDir": ".",
     "strict": true,
-    "types": ["node", "cypress"],
+    "types": [
+      "node",
+      "cypress"
+    ],
     "sourceMap": true,
     "esModuleInterop": true,
     "strictPropertyInitialization": false,
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "moduleResolution": "node",
     "skipLibCheck": true,
     "newLine": "lf"
   },
-  "exclude": ["lib", "test"]
+  "exclude": [
+    "lib",
+    "test"
+  ]
 }

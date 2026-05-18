@@ -1,7 +1,16 @@
 {
   "name": "cypress-easy-network-stub",
-  "version": "3.2.1",
+  "version": "4.0.0",
+  "type": "module",
   "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/index.d.ts",
+      "import": "./lib/index.js",
+      "default": "./lib/index.js"
+    }
+  },
   "repository": "https://github.com/LoaderB0T/cypress-easy-network-stub.git",
   "author": {
     "name": "Janik Schumacher (LoaderB0T)",
@@ -17,27 +26,24 @@
     "test": "pnpm cypress run --project test",
     "test-open": "pnpm cypress open --project test"
   },
-  "dependencies": {
-    "easy-network-stub": "^7.1.0"
-  },
   "devDependencies": {
-    "@awdware/eslint-config-base": "^2.1.0",
+    "@awdware/eslint-config-base": "^2.1.1",
     "@awdware/eslint-config-nodejs": "^2.0.0",
     "@awdware/prettier-config": "^1.0.0",
-    "@types/node": "^22.0.2",
-    "cypress": "^13.13.2",
-    "cypress-multi-reporters": "^1.6.4",
-    "eslint": "^9.11.1",
-    "eslint-plugin-import": "2.31.0",
-    "eslint-plugin-unused-imports": "4.1.4",
+    "@types/node": "^25.9.0",
+    "cypress": "^15.15.0",
+    "cypress-multi-reporters": "^2.0.5",
+    "eslint": "^10.4.0",
+    "eslint-plugin-import": "2.32.0",
+    "eslint-plugin-unused-imports": "4.4.1",
     "mocha-junit-reporter": "^2.2.1",
-    "prettier": "^3.3.3",
-    "rimraf": "^6.0.1",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.5.4",
-    "typescript-eslint": "8.8.0"
+    "prettier": "^3.8.3",
+    "rimraf": "^6.1.3",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "8.59.3"
   },
   "peerDependencies": {
-    "cypress": ">= 6.0"
+    "cypress": ">= 6.0",
+    "easy-network-stub": ">= 8.0.0"
   }
 }

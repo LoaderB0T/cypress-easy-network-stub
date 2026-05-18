@@ -1,5 +1,5 @@
 import { HttpMethod } from 'easy-network-stub';
-import { getError } from './expected-error';
+import { getError } from './expected-error.js';
 
 export type FetchType = {
   url: string;
@@ -35,7 +35,12 @@ export const doFetch = async (cfg: FetchType): Promise<unknown> => {
   });
 };
 
-export const expectFailFetch = (baseUrl: string, url: string, method: HttpMethod, getLastError: () => string) => {
+export const expectFailFetch = (
+  baseUrl: string,
+  url: string,
+  method: HttpMethod,
+  getLastError: () => string
+) => {
   return cy.wrap(null).then(() => {
     return doFetch({ url, method })
       .catch(() => {

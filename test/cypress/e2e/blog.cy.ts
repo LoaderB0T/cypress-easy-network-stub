@@ -1,5 +1,5 @@
-import { CypressEasyNetworkStub } from '../../../src/index';
-import { expectFailFetch, expectFetch } from '../helper/expect-fetch';
+import { CypressEasyNetworkStub } from '../../../src/index.js';
+import { expectFailFetch, expectFetch } from '../helper/expect-fetch.js';
 
 let blogStub: CypressEasyNetworkStub;
 let lastError: string;
