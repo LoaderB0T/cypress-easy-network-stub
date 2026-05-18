@@ -2,3 +2,5 @@ allowBuilds:
   cypress: true
 
 minimumReleaseAge: 3000
+minimumReleaseAgeExclude:
+  - easy-network-stub
