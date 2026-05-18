@@ -30,7 +30,7 @@
     "@awdware/eslint-config-base": "^2.1.1",
     "@awdware/eslint-config-nodejs": "^2.0.0",
     "@awdware/prettier-config": "^1.0.0",
-    "@types/node": "^25.9.0",
+    "@types/node": "^25.8.0",
     "cypress": "^15.15.0",
     "cypress-multi-reporters": "^2.0.5",
     "eslint": "^10.4.0",
